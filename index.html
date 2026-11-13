@@ -521,7 +521,9 @@ function applyData(d){
 
 /* ---------- Společné ukládání (Supabase) ----------
    Prázdné SB_URL = appka funguje jen lokálně jako dřív. */
-const SB_URL='', SB_KEY='';
+// anon klíč je veřejný z principu – data chrání pravidla v databázi (supabase-schema.sql)
+const SB_URL='https://xhorwgaszertlwjcpdns.supabase.co',
+      SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhob3J3Z2FzemVydGx3amNwZG5zIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ1NTQ4NjIsImV4cCI6MjExMDEzMDg2Mn0.3eB9eSbIg0oLpUerS0BWq2vyzc9A7XGM6HSeEGqSgoM';
 const cloud=!!(SB_URL&&SB_KEY&&window.supabase);
 const sb=cloud?supabase.createClient(SB_URL,SB_KEY):null;
 const ME=uid();          // podle toho poznáme vlastní uložení, které se vrátí přes realtime
