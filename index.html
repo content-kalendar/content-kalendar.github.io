@@ -608,8 +608,9 @@ $('#delBtn').onclick=()=>{if(editing&&confirm('Opravdu smazat tenhle příspěve
 $('#dupBtn').onclick=()=>{if(!editing)return;const c={...editing,id:uid(),title:editing.title+' (kopie)',tags:[...editing.tags]};state.posts.push(c);markDirty();openPost(c)};
 $('#fAccPick').onclick=e=>{const b=e.target.closest('.tile');if(!b)return;pickAcc=b.dataset.acc;renderPickers()};
 $('#fTagPick').onclick=e=>{const b=e.target.closest('.tile');if(!b)return;
-  if(b.dataset.new){const n=prompt('Jak se má nový formát jmenovat?');if(n&&n.trim()){const t=newTag(n.trim());pendingTags.push(t.id);pickTags.add(t.id)}}
-  else pickTags.has(b.dataset.id)?pickTags.delete(b.dataset.id):pickTags.add(b.dataset.id);
+  // formát je jen jeden; opětovným kliknutím na vybraný se výběr zruší
+  if(b.dataset.new){const n=prompt('Jak se má nový formát jmenovat?');if(n&&n.trim()){const t=newTag(n.trim());pendingTags.push(t.id);pickTags=new Set([t.id])}}
+  else pickTags=pickTags.has(b.dataset.id)&&pickTags.size===1?new Set():new Set([b.dataset.id]);
   renderPickers()};
 
 $('#tagsBtn').onclick=()=>{renderTagList();$('#tagModal').classList.add('show')};
