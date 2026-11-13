@@ -149,8 +149,44 @@
 
   @media (max-width:900px){
     .layout{grid-template-columns:1fr}
+    main{order:-1}            /* kalendář nahoru, filtry a statistiky pod něj */
     .day{min-height:96px}
     .post .meta{display:none}
+  }
+  @media (max-width:640px){
+    header{position:static;padding:10px 12px;gap:6px}
+    header h1{font-size:16px;width:100%;margin:0}
+    .btn{padding:7px 10px;font-size:13px}
+    .month .btn.round{width:32px;height:32px}
+    .month-title{font-size:15px;min-width:112px}
+    .seg button{padding:7px 10px;font-size:13px}
+    #sync{width:100%}
+    .help{margin:0 12px 4px;padding:10px 12px;gap:6px 12px;font-size:13px}
+    .help .n{width:22px;height:22px;font-size:12px}
+    .layout{padding:10px 12px 24px;gap:12px}
+    .dow div{padding:6px 0;text-align:center;font-size:12px}
+    .day{min-height:66px;padding:3px;gap:3px}
+    .num{font-size:13px;min-width:22px;height:22px}
+    .todaytag,.addhint{display:none}
+    .day .hol{font-size:0;padding:0;height:4px;border-radius:2px}   /* v kalendáři svátek jen jako barevný proužek */
+    .day .hol.state{background:var(--h-state)} .day .hol.health{background:var(--h-health)}
+    .lday .lp{min-width:0}
+    .lrow>div{flex:1 1 100% !important;order:-1}   /* název a text na vlastní řádek nad štítky */
+    .post{padding:2px 4px;font-size:10.5px;border-radius:5px}
+    .lday{grid-template-columns:54px 1fr;gap:8px;padding:8px}
+    .lday .ld{padding:8px 2px}
+    .lday .ld b{font-size:18px}
+    .lday .ld small{font-size:11px}
+    .lrow{padding:8px 10px;gap:6px}
+    .lrow .n{max-width:100%}
+    .backdrop{padding:0}
+    .modal{border-radius:0;min-height:100%}
+    .modal .mh,.modal .mb,.modal .mf{padding-left:14px;padding-right:14px}
+    .tiles{grid-template-columns:repeat(auto-fill,minmax(100px,1fr))}
+    .modal .mf .spacer{display:none}
+    .modal .mf .btn.primary{flex:1 1 100%;justify-content:center;order:-1;padding:12px}  /* hlavní tlačítko přes celou šířku */
+    /* iOS přibližuje stránku u polí s písmem pod 16 px */
+    input,textarea,select{font-size:16px !important}
   }
 </style>
 </head>
@@ -627,6 +663,8 @@ if(cloud){
   const s3=$('#help .step:nth-of-type(3)');if(s3)s3.lastChild.textContent='Ukládá se samo – Uložit stáhne zálohu do souboru';
   $('#exportBtn').title='Stáhnout zálohu kalendáře (.json)';
 }
+// na telefonu je čitelnější seznam; kalendář jde přepnout tlačítkem
+if(matchMedia('(max-width:640px)').matches){view='list';document.querySelectorAll('#viewSeg button').forEach(x=>x.classList.toggle('on',x.dataset.v==='list'))}
 render();
 if(cloud)initCloud();
 </script>
